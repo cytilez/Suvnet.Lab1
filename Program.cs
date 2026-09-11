@@ -464,12 +464,12 @@ class Program
 
             newParcel.Sender = splitInfo[0];
             newParcel.Weight = ParseDouble(splitInfo[1]);
-            if (splitInfo[2] == "Ja")
+            if (splitInfo[2] == "Ja" || splitInfo[2] == "True")
             {
                 newParcel.Insurance = true;
             }
             newParcel.Value = ParseDouble(splitInfo[3]);
-            if (splitInfo[4] == "Ja")
+            if (splitInfo[4] == "Ja" || splitInfo[4] == "True")
             {
                 newParcel.Member = true;
             }
