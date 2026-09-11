@@ -1,4 +1,10 @@
+
+
+
+
+
 using System.Globalization;
+
 
 
 class Program
@@ -7,7 +13,7 @@ class Program
     {
         List<Parcel> parcelList = new();
         ShipFees shipFees = new();
-        
+        string week = "vecka2.txt";
 
         bool run = true;
 
@@ -29,6 +35,7 @@ class Program
                 
                 BuildParcel(parcelList,shipFees);
                 TagParcel(parcelList);
+                WriteOrderToFile(parcelList,week);
                 PrintParcels(parcelList);
                
             }
@@ -66,6 +73,7 @@ class Program
 
     static void BuildParcel(List<Parcel> parcelList,ShipFees shipFees)
     {
+        parcelList.Clear();
         Parcel parcel = new();
 
         bool nameCheck = false;
@@ -160,7 +168,7 @@ class Program
             CountryID selectedCountry = shipFees.Fees[choice - 1];
 
             parcel.Country = selectedCountry.Name;
-            parcel.BaseCost = selectedCountry.Fee;
+            
         }
 
 
@@ -218,6 +226,7 @@ class Program
 
     static void ReadParcelFile(List<Parcel> parcelList)
     {   
+        parcelList.Clear();
         bool fileCheck = false;
 
         while (fileCheck == false)
@@ -226,7 +235,7 @@ class Program
             Console.WriteLine("Ange sök väg: \n");
             string inputPath = Console.ReadLine();
             string path = Path.Combine("files",$"{inputPath}.txt");
-            string[] parcels = File.ReadAllLines(path);
+            
 
             if (String.Equals(inputPath,"exit", StringComparison.OrdinalIgnoreCase))
             {
@@ -236,6 +245,8 @@ class Program
 
             if (File.Exists(path))
             {
+                string[] parcels = File.ReadAllLines(path);
+
                 foreach (string parcelInfo in parcels)
                 {
                     string[] splitInfo = parcelInfo.Split(';');
@@ -243,12 +254,12 @@ class Program
 
                     newParcel.Sender = splitInfo[0];
                     newParcel.Weight = ParseDouble(splitInfo[1]);
-                    if (splitInfo[2] == "Ja")
+                    if (splitInfo[2] == "Ja" || splitInfo[2] == "True")
                     {
                         newParcel.Insurance = true;
                     }
                     newParcel.Value = ParseDouble(splitInfo[3]);
-                    if (splitInfo[4] == "Ja")
+                    if (splitInfo[4] == "Ja" || splitInfo[4] == "True")
                     {
                         newParcel.Member = true;
                     }
@@ -436,6 +447,7 @@ class Program
 
     static void LoadSearch(List<Parcel> parcelList,string path)
     {
+        parcelList.Clear();
         string[] parcels = File.ReadAllLines(path);
 
             
@@ -467,7 +479,39 @@ class Program
             
     }
 
+    static void WriteOrderToFile(List<Parcel> parcelList,string week)
+    {
+        string path = Path.Combine("files",week);
+
+        if (File.Exists(path))
+        {
+            foreach (Parcel parcel in parcelList)
+            {
+                string writeParcel =
+                $"{parcel.Sender};"+
+                $"{parcel.Weight};"+
+                $"{parcel.Insurance};"+
+                $"{parcel.Value};"+
+                $"{parcel.Member};"+
+                $"{parcel.Country};"+
+                $"{parcel.Tag};"+
+                $"{parcel.BaseCost};"+
+                $"{parcel.WeightCost};"+
+                $"{parcel.HighWeightCost};"+
+                $"{parcel.InsuranceCost};"+
+                $"{parcel.TotalCost}";
+                
+
+                File.AppendAllText(path,writeParcel+ Environment.NewLine);
+                
+            }
+        }
+    }
+
 }
+
+
+
 
 //======= class Parcel == >>>>
 
