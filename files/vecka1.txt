@@ -1,0 +1,4 @@
+Anders Emgard;24;Ja;2000;Ja;Sverige;Notset
+Bashir Moyo;8;Nej;0;Nej;Eritrea;Notset
+Vanja Bergåker;31;Ja;16499;Ja;Spanien;Notset
+Cygnus;133;Ja;33000;Ja;Danmark;Notset
