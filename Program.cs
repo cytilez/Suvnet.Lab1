@@ -23,9 +23,9 @@ class Program
             Console.WriteLine("1) Beräkna frakt för ett paket");
             Console.WriteLine("2) Beräkna frakt för flera paket från fil");
             Console.WriteLine("3) Sök Paket\n");
-            Console.WriteLine("4) Avsluta\n");
+            Console.WriteLine("4) Skriv ut lista");
+            Console.WriteLine("5) Avsluta\n");
             Console.Write("Val: ");
-
             string input = Console.ReadLine();
             
             
@@ -52,6 +52,11 @@ class Program
                 PrintParcels(parcelList);
             }
             else if (input == "4")
+            {
+                ReadParcelFile(parcelList);
+                PrintParcels(parcelList);
+            }
+            else if (input == "5")
             {
                 //run = false;
                 break;
